@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>react</title>
+    <script src="js/react.js"></script>
+    <script src="js/JSXTransformer.js"></script>
+</head>
+<body>
+    <div class="" id="wrapper"></div>
+
+    <script type="text/jsx">
+        var Content = React.createClass({
+            getInitialState: function () {
+                return {
+                    text: ''
+                }
+            },
+            handleSubmit: function () {
+                console.log('Relpy To: ' + this.props.selectName);
+                console.log(this.state.text);
+            },
+            handleInput: function (event) {
+                this.setState({text: event.target.value});
+            },
+            render: function () {
+                return <div>
+                    <textarea onChange={this.handleInput} placeholder="Enter something...">{this.state.text}</textarea><br />
+                    <button onClick={this.handleSubmit}>submit</button>
+                </div>
+            }
+        });
+
+        var Comment = React.createClass({
+            getInitialState: function () {
+                return {
+                    options: ["tom", "jack", "john"]
+                }
+            },
+            handleSelect: function (event) {
+                this.setState({option: event.target.value});
+            },
+            render: function () {
+                var options = [];
+                for (var i = 0; i < this.state.options.length; i++) {
+                    options.push(<option value={this.state.options[i]}>{this.state.options[i]}</option>);
+                };
+                return <div>
+                    <select onChange={this.handleSelect}>{options}</select><br />
+                    <Content selectName={this.state.option} />
+                </div>
+            }
+        });
+        React.render(<Comment />, document.getElementById("wrapper"));
+    </script>
+</body>
+</html>
